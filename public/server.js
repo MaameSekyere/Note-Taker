@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const fs = require("fs");
 const util = require("util");
+const { parse } = require("path");
 
 //handling async processes
 const readFileAsync = util.promisify(fs.readFile);
@@ -49,3 +50,25 @@ app.post("/api/notes", function (req, res) {
       res.json(note);
     });
 });
+
+//API Route | "DELETE" request
+app.delete("./api/notes/:id", function (req, res) {
+  const toDelete = parseInt(req.params.id);
+  readFileAsync("./db/db.json", "utf8")
+    .then(function (data) {
+      const notes = [].concat(JSON.parse(data));
+      const newNotes = [];
+      for (let i = 0; i < notes.length; i++) {
+        if (toDelete !== notes[i].id) {
+          newNotes.push(notes[i]);
+        }
+      }
+      return newNotes;
+    })
+    .then(function (notes) {
+      writeFileAsync("./db/db.json", JSON.stringify(notes));
+      res.send("successfully saved!");
+    });
+});
+
+//HTML Routes
