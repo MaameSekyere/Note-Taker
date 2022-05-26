@@ -51,9 +51,9 @@ app.delete("/api/notes/:id", function (req, res) {
       return notes;
     })
     .then(function (notes) {
-      console.log(notes)
-      
-      var final = notes.filter((note) => note.id !== req.params.id)
+      console.log(notes);
+
+      var final = notes.filter((note) => note.id !== req.params.id);
       console.log(notes.id);
       return final;
     })
@@ -67,7 +67,7 @@ app.delete("/api/notes/:id", function (req, res) {
 app.get("/notes", function (req, res) {
   res.sendFile(path.join(__dirname, "../Note-Taker/public/notes.html"));
 });
-// /Users/maamesekyere/Desktop/Bootcamp/Note-Taker/public/notes.html
+
 app.get("*", function (req, res) {
   res.sendFile(path.join(__dirname, "../Note-Taker/public/index.html"));
 });
