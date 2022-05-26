@@ -38,7 +38,9 @@ WHEN I click on the Write icon in the navigation at the top of the page
 THEN I am presented with empty fields to enter a new note title and the note’s text in the right-hand column
 
 ## Screenshots
+<img width="1440" alt="Screen Shot 2022-05-26 at 3 10 06 PM" src="https://user-images.githubusercontent.com/94888460/170563211-7c83dc83-405c-4b4f-af5a-5e1a9cf1d1cd.png">
 
+<img width="1440" alt="Screen Shot 2022-05-26 at 3 10 37 PM" src="https://user-images.githubusercontent.com/94888460/170563241-4d6ef74c-4b70-4db9-8457-b8ebab2cb214.png">
 ## Contact
 
 Created by: Maame Sekyere
