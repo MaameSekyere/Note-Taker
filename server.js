@@ -21,18 +21,10 @@ app.use(express.static("./public"));
 
 //API Route | "GET" request
 app.get("/api/notes", function (req, res) {
-  const note = req.body;
-  readFileAsync("./db/db.json", "utf8")
-    .then(function (data) {
-      const notes = [].concat(JSON.parse(data));
-      note.id = notes.length + 1;
-      notes.push(note);
-      return notes;
-    })
-    .then(function (notes) {
-      writeFileAsync("./db/db.json", JSON.stringify(notes));
-      res.json(note);
-    });
+  readFileAsync("./db/db.json", "utf8").then(function (data) {
+    const notes = [].concat(JSON.parse(data));
+    res.json(notes);
+  });
 });
 
 //API Route | "POST" request
@@ -52,36 +44,32 @@ app.post("/api/notes", function (req, res) {
 });
 
 //API Route | "DELETE" request
-app.delete("./api/notes/:id", function (req, res) {
-  const toDelete = parseInt(req.params.id);
+app.delete("/api/notes/:id", function (req, res) {
   readFileAsync("./db/db.json", "utf8")
     .then(function (data) {
       const notes = [].concat(JSON.parse(data));
-      const newNotes = [];
-      for (let i = 0; i < notes.length; i++) {
-        if (toDelete !== notes[i].id) {
-          newNotes.push(notes[i]);
-        }
-      }
-      return newNotes;
+      return notes;
     })
     .then(function (notes) {
-      writeFileAsync("./db/db.json", JSON.stringify(notes));
+      console.log(notes)
+      
+      var final = notes.filter((note) => note.id !== req.params.id)
+      console.log(notes.id);
+      return final;
+    })
+    .then(function (newNotes) {
+      writeFileAsync("./db/db.json", JSON.stringify(newNotes));
       res.send("successfully saved!");
     });
 });
 
 //HTML Routes
-app.get("./notes", function (req, res) {
-  res.sendFile(path.join(__dirname, "../public/notes.html"));
+app.get("/notes", function (req, res) {
+  res.sendFile(path.join(__dirname, "../Note-Taker/public/notes.html"));
 });
-
-app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname, "../public/index.html"));
-});
-
+// /Users/maamesekyere/Desktop/Bootcamp/Note-Taker/public/notes.html
 app.get("*", function (req, res) {
-  res.sendFile(path.join(__dirname, "../public/index.html"));
+  res.sendFile(path.join(__dirname, "../Note-Taker/public/index.html"));
 });
 
 //listen
